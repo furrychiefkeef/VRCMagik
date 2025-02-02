@@ -4,11 +4,12 @@ class Entry
 {
     static async Task Main()
     {
+        Console.Write("MAGIK::");
         VRCServer? server  = new VRCServer("auth=authcookie_94b9c955-b342-4a3c-b825-d7648981765b");
         VRCServer.Connect();
         Console.Write("Enter a Command: ");
         string? cmd = Console.ReadLine();
-        if (cmd != null && cmd.StartsWith("$del"))
+        if (cmd != null && cmd.StartsWith("del"))
         {
             // Split the command to get the group ID
             string[] cmdParts = cmd.Split(' ');
@@ -19,10 +20,7 @@ class Entry
                 string groupId = cmdParts[1];
                 await server.DeleteGroupAsync(groupId);
             }
-            else
-            {
-                Console.WriteLine("Please provide a group ID.");
-            }
+            else Console.WriteLine("Please provide a group ID.");
         }
         else
         {

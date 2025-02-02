@@ -12,3 +12,4 @@ C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.pdb
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.genruntimeconfig.cache
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\ref\VRCMagik.Console.dll
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.sourcelink.json
