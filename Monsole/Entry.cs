@@ -5,7 +5,7 @@ class Entry
     static async Task Main()
     {
         Console.Write("MAGIK::");
-        VRCServer? server  = new VRCServer("auth=authcookie_94b9c955-b342-4a3c-b825-d7648981765b");
+        VRCServer? server  = new VRCServer(System.Environment.GetEnvironmentVariable("VRMAGIK::VRC_AUTH", System.Enviroment.UserVariable.User));
         VRCServer.Connect();
         Console.Write("Enter a Command: ");
         string? cmd = Console.ReadLine();
