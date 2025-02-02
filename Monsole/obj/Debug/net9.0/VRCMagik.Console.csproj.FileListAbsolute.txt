@@ -1,0 +1,14 @@
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.AssemblyInfoInputs.cache
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.AssemblyInfo.cs
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.csproj.CoreCompileInputs.cache
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\bin\Debug\net9.0\VRCMagik.Console.exe
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\bin\Debug\net9.0\VRCMagik.Console.deps.json
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\bin\Debug\net9.0\VRCMagik.Console.runtimeconfig.json
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\bin\Debug\net9.0\VRCMagik.Console.dll
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\bin\Debug\net9.0\VRCMagik.Console.pdb
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.dll
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\refint\VRCMagik.Console.dll
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.pdb
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\VRCMagik.Console.genruntimeconfig.cache
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\Monsole\obj\Debug\net9.0\ref\VRCMagik.Console.dll
