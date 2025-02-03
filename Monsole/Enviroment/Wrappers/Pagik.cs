@@ -45,6 +45,16 @@ internal class Pagik
 public static class ConsoleExtensions
 {
    public static string AddSlashN(this string target) => target + "\n";
+   public static string Seperator(this string target)
+    {
+        string separator = "=";
+        if (target.Length != 0)
+        {
+            var a = new string(separator[0], target.Length);
+            return target + "\n" + a;
+        }
+        return string.Empty;
+    }
 }
 class CColors 
 {
