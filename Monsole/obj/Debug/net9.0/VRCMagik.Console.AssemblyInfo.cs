@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VRCMagik.Console")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19796207ebe9c0b97c611fbbd1dd60046d9efacf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d7da7162a1b7b83236b3b99f46c0eac9622300f8")]
 [assembly: System.Reflection.AssemblyProductAttribute("VRCMagik.Console")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VRCMagik.Console")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

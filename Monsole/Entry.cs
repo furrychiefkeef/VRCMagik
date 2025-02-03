@@ -1,13 +1,14 @@
 ﻿using VRCMagik.Console;
+using VRCMagik.Console.Enviroment.Wrappers;
 
 class Entry
 {
     static async Task Main()
     {
-        Console.Write("MAGIK::");
-        VRCServer? server  = new VRCServer(System.Environment.GetEnvironmentVariable("VRMAGIK::VRC_AUTH", System.Enviroment.UserVariable.User));
+        Pagik.Console console = new("VRCMAGIK");
+        VRCServer? server  = new VRCServer(Environment.GetEnvironmentVariable("VRMAGIK::VRC_AUTH", EnvironmentVariableTarget.User));
         VRCServer.Connect();
-        Console.Write("Enter a Command: ");
+        console.Log("Enter a Command: ".AddSlashN());
         string? cmd = Console.ReadLine();
         if (cmd != null && cmd.StartsWith("del"))
         {
