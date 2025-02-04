@@ -1,5 +1,5 @@
-﻿using VRCMagik.Console;
-using VRCMagik.Console.Enviroment.Wrappers;
+﻿using VRCMagik.Console.Enviroment.Wrappers;
+using VRCMagik.Wrappers;
 internal class Entry
 {
     static async Task Main()
