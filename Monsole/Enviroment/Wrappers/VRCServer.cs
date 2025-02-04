@@ -37,7 +37,7 @@ internal class VRCServer
     /// <summary>
     /// Initializes the HTTP client for VRChat API requests.
     /// </summary>
-    public static void Connect()
+    public static VRCServer Connect()
     {
         Client.Connect();
         Client.Server.DefaultRequestHeaders
@@ -46,6 +46,7 @@ internal class VRCServer
             .Add("Accept", "application/json");
         Client.Server.DefaultRequestHeaders
             .Add("Cookie", AuthCookie);
+        return default;
     }
 }
 

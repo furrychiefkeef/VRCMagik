@@ -7,6 +7,7 @@ internal class Entry
         Pagik.Console console = new("VRCMAGIK");
         VRCServer? server  = new VRCServer(Environment.GetEnvironmentVariable("VRMAGIK::VRC_AUTH", EnvironmentVariableTarget.User));
         VRCServer.Connect();
+
         console.Log("Enter a Command: ");
         string? cmd = Console.ReadLine();
         if (cmd != null && cmd.StartsWith("del"))
