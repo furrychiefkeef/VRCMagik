@@ -42,6 +42,7 @@ internal class Vertical
                     break;
 
             }
+            r.EnsureSuccessStatusCode();
             if (r.IsSuccessStatusCode)
             {
                 string _content = await r.Content.ReadAsStringAsync();

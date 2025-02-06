@@ -40,8 +40,8 @@ internal class VRCServer
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
         string data = JsonSerializer.Serialize(JsonDATA);
-        HttpContent content = new StringContent(data,Encoding.UTF8);
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content, "application/json");
+        HttpContent content = new StringContent(data,Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
     public async Task AsyncUnblockUser(string _usr, string type)
     {
