@@ -6,17 +6,19 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace VRCMagik.Console.Enviroment.Wrappers;
-internal class HTTPCenter
+using VRCMagik.Console.Enviroment.Wrappers;
+
+namespace VRCMagik.NET.Wrappers;
+internal class Vertical
 {
     private string HOST_NAME { get; set; }
     public HttpClient? Server;
-    public HTTPCenter(string hostName) => HOST_NAME = hostName;
+    public Vertical(string hostName) => HOST_NAME = hostName;
     public void Connect()
     {
         Server = new HttpClient { BaseAddress = new(HOST_NAME) };
     }
-    public async Task Call(Requests requests, string path, bool pretty = true)
+    public async Task Call(Requests requests, string path, HttpContent? content = null, bool pretty = true)
     {
         if (Server != null)
         {
@@ -24,57 +26,63 @@ internal class HTTPCenter
             switch (requests)
             {
                 case Requests.GET:
-                    r = await Server.GetAsync(path);
+                    r = await Server.GetAsync(path);  
                     break;
                 case Requests.POST:
-                    r = await Server.PostAsync(path, default);
+                    r = await Server.PostAsync(path, content);
                     break;
                 case Requests.PUT:
-                    r = await Server.PutAsync(path, default);
+                    r = await Server.PutAsync(path, content);
                     break;
                 case Requests.DEL:
                     r = await Server.DeleteAsync(path);
+                    break;   
+                    case Requests.PAT:
+                    r = await Server.PatchAsync(path, content);
                     break;
-            }
 
+            }
             if (r.IsSuccessStatusCode)
             {
-                string content = await r.Content.ReadAsStringAsync();
+                string _content = await r.Content.ReadAsStringAsync();
                 if (pretty)
                 {
-                    object? obj = JsonSerializer.Deserialize<object>(content);
+                    object? obj = JsonSerializer.Deserialize<object>(_content);
                     string prettyJson = JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true });
 
-                    System.Console.WriteLine($"[{r.StatusCode}] \n{prettyJson}");
+                    Entry.console.Info($"[{r.StatusCode}] \n{prettyJson}");
                     System.Console.ReadLine();
                 }
                 else
                 {
-                    System.Console.WriteLine($"[{r.StatusCode}] \n{content}");
+                    Entry.console.Info($"[{r.StatusCode}] \n{content}");
                     System.Console.ReadLine();
                 }
-            }   
+            }
+            else
+            {
+                System.Console.Clear();
+                Entry.console.Error($"{r.Content.ReadAsStringAsync().Result}".AddSlashN());
+            }
         }
         else
         {
-            Pagik.Console console = new("VRCMAGIK");
-            console.Error("SERVER IS NULLED!");
+            Entry.console.Error("SERVER IS NULLED!".AddSlashN());
         }
     }  
 	public enum Requests
 	{
-        GET,
+        GET ,
         POST,
         PUT,
         DEL,
-        PAT, // PATCH
+        PAT, /// PATCH
         OPTIONS,
         HEAD
     }
 }
-/* case Requests.PAT:
-                    break;
-                case Requests.OPTIONS:
+
+/*                case Requests.OPTIONS:
                     break;
                 case Requests.HEAD:
                     break;*/
