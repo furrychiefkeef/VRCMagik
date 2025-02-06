@@ -39,7 +39,7 @@ internal class VRCServer
         }
         return _instance;
     }
-
+    #region Groups
     public void CreateGroup(string name, string dev)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
@@ -55,8 +55,15 @@ internal class VRCServer
 
         await Client.Call(Vertical.Requests.DEL, $"groups/{grpId}");
     }
-    #region PlayerModeration
+    #endregion
 
+    #region VRCUser
+
+    public async Task AsyncRemoveAllModerations()
+    {
+        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+        await Client.Call(Vertical.Requests.DEL, $"auth/user/playermoderations");
+    }
     public async Task AsyncUnmuteUser(string _usr)
     {
         ModerationData mdata = new() { moderated = _usr, type = "unmute" };
@@ -82,7 +89,7 @@ internal class VRCServer
 
     public async Task AsyncInteractionUserOn(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr, type = "interactOn"};
+        ModerationData mdata = new() {moderated = _usr, type = "interactOff"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -123,12 +130,28 @@ internal class VRCServer
     }
 
     #endregion
+
+    #region Avatar
     public async Task AsyncSelectAvatar(string avatarId)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
         await Client.Call(Vertical.Requests.PUT, $"avatars/{avatarId}/select");
     }
+    public async Task AsyncDeleteAvatar(string avatarId)
+    {
+        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+
+        await Client.Call(Vertical.Requests.DEL, $"avatars/{avatarId}");
+    }
+    public async Task AsyncUpdateAvatar(string avatarId)
+    {
+        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+
+        await Client.Call(Vertical.Requests.PUT, $"avatars/{avatarId}");
+    }
+    #endregion
+
     /// <summary>
     /// Initializes the HTTP client for VRChat API requests.
     /// </summary>
@@ -174,6 +197,18 @@ internal class VRCServer
                     break;
             }
         }
+        public static async Task Avatar(string avtr, API_VRC.VRCAvatar.Action actions)
+        {
+            switch (actions)
+            {
+                case API_VRC.VRCAvatar.Action.Select:
+                    await GetInstance().AsyncSelectAvatar(avtr);
+                    break;
+                case API_VRC.VRCAvatar.Action.Delete:
+                    await GetInstance().AsyncDeleteAvatar(avtr);
+                    break;
+            }
+        }
     }
   
    
@@ -188,7 +223,7 @@ internal class VRCServer
                 public string? moderated { get; set; }
                 public string? type { get; set; }
             }
-            public enum ModerationTypes { unmute = 0, unblock = 1, interactOn = 2, mute = 3, block = 4, interactOff = 5,  }
+            public enum ModerationTypes { unmute = 0, unblock = 1, interactOn = 2, mute = 3, block = 4, interactOff = 5 }
             #endregion
         }
         public static class VRCAvatar

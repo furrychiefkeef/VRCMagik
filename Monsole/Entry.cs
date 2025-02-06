@@ -53,7 +53,7 @@ internal class Entry
                 if (handle.StartsWith(value: "usr_"))
                 {
                     console.Info("USER ID");
-                    await VRCServer.Advance.PlayerModeration(handle,VRCServer.API_VRC.VRCUser.ModerationTypes.block);
+                    await VRCServer.Advance.PlayerModeration(handle,VRCServer.API_VRC.VRCUser.ModerationTypes.interactOn);
                 }
 
             }
