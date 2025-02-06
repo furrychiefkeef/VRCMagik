@@ -15,7 +15,6 @@ namespace VRCMagik.Wrappers;
 internal class VRCServer
 {
     static string? AuthCookie;
-    static string? data;
     static Vertical Client = new Vertical("https://api.vrchat.cloud/api/1/");
     public VRCServer(string authCookie) => AuthCookie = authCookie;
     public void CreateGroup(string name, string dev)
@@ -36,41 +35,62 @@ internal class VRCServer
     #region PlayerModeration
     public async Task AsyncBlockUser(string _usr)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new()
-        {
-            moderated = _usr, 
-            type = "block"
-        };
+        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "block"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
         string data = JsonSerializer.Serialize(JsonDATA);
         HttpContent content = new StringContent(data,Encoding.UTF8);
+        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content, "application/json");
+    }
+    public async Task AsyncUnblockUser(string _usr, string type)
+    {
+        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr,type = "unblock"};
+
+        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+
+        string data = JsonSerializer.Serialize(JsonDATA);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-    public async Task AsyncUnBlockUser(string userid, string type)
+    public async Task AsyncMuteUser(string _usr, string type)
     {
+        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "mute"};
+
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations");
+        string data = JsonSerializer.Serialize(JsonDATA);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-    public async Task AsyncMuteUser(string userid, string type)
+    public async Task AsyncUnmuteUser(string _usr, string type)
     {
+        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "unmute"};
+
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations");
+        string data = JsonSerializer.Serialize(JsonDATA);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-    public async Task AsyncUnMuteUser(string userid, string type)
+    public async Task AsyncInteractionUser(string _usr, bool state)
     {
+        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr};
+
+        switch (state)
+        {
+            case true:
+                JsonDATA.type = "interactOn";
+                break;
+            case false:
+                JsonDATA.type = "interactOff";
+                break;  
+        }
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations");
-    }
-    public async Task AsyncInteractionUser(string userid, string type)
-    {
-        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
-
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations");
+        string data = JsonSerializer.Serialize(JsonDATA);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
     #endregion
     public async Task AsyncSelectAvatar(string avatarId)
