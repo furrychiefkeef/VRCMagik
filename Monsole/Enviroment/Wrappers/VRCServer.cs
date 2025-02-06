@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using VRCMagik.Console.Enviroment.Wrappers;
 using VRCMagik.NET.Wrappers;
 
+using static VRCMagik.Wrappers.VRCServer.API_VRC.VRCUser;
+
 namespace VRCMagik.Wrappers;
 internal class VRCServer
 {
@@ -35,7 +37,7 @@ internal class VRCServer
     #region PlayerModeration
     public async Task AsyncBlockUser(string _usr)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "block"};
+        ModerationData mdata = new() {moderated = _usr, type = "block"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -45,50 +47,50 @@ internal class VRCServer
     }
     public async Task AsyncUnblockUser(string _usr, string type)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr,type = "unblock"};
+        ModerationData mdata = new() {moderated = _usr,type = "unblock"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        string data = JsonSerializer.Serialize(JsonDATA);
+        string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
     public async Task AsyncMuteUser(string _usr, string type)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "mute"};
+        ModerationData mdata = new() {moderated = _usr, type = "mute"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        string data = JsonSerializer.Serialize(JsonDATA);
+        string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
     public async Task AsyncUnmuteUser(string _usr, string type)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr, type = "unmute"};
+        ModerationData mdata = new() {moderated = _usr, type = "unmute"};
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        string data = JsonSerializer.Serialize(JsonDATA);
+        string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
     public async Task AsyncInteractionUser(string _usr, bool state)
     {
-        VRCUserProperties.ModerationAction JsonDATA = new() {moderated = _usr};
+        ModerationData mdata = new() {moderated = _usr};
 
         switch (state)
         {
             case true:
-                JsonDATA.type = "interactOn";
+                mdata.type = "interactOn";
                 break;
             case false:
-                JsonDATA.type = "interactOff";
+                mdata.type = "interactOff";
                 break;  
         }
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        string data = JsonSerializer.Serialize(JsonDATA);
+        string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
@@ -117,57 +119,47 @@ internal class VRCServer
 
     public class Advance
     {
-        public async Task PlayerModeration(string _usr, VRCUserProperties.ModerationTypes types)
+        public async Task PlayerModeration(string _usr, API_VRC.VRCUser.ModerationTypes types)
         {
             if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
             switch (types)
             {       
-                case VRCUserProperties.ModerationTypes.mute:                
+                case ModerationTypes.mute:                
                     break;
-                case VRCUserProperties.ModerationTypes.unmute:
+                case ModerationTypes.unmute:
                     break;
-                case VRCUserProperties.ModerationTypes.block:
+                case ModerationTypes.block:
                     break;
-                case VRCUserProperties.ModerationTypes.unblock:
+                case ModerationTypes.unblock:
                     break;
-                case VRCUserProperties.ModerationTypes.interactOn:
+                case ModerationTypes.interactOn:
                     break;
-                case VRCUserProperties.ModerationTypes.interactOff:
-                    break;
-                default:
+                case ModerationTypes.interactOff:
                     break;
             }
         }
     }
   
-    public static class VRCUserProperties
+   
+    public static class API_VRC
     {
-        public struct ModerationAction
+        //if you deob it doesn't look like what ur seeing trust.
+        public static class VRCUser
         {
-            public string? moderated { get; set; }
-            public string? type { get; set; }
+            #region Moderation
+            public struct ModerationData
+            {
+                public string? moderated { get; set; }
+                public string? type { get; set; }
+            }
+            public enum ModerationTypes { unmute = 0, unblock = 1, interactOn = 2, mute = 3, block = 4, interactOff = 5,  }
+            #endregion
         }
-
-        public enum ModerationTypes
+        public static class VRCAvatar
         {
-            None = 0,
-
-            mute = 1,
-            unmute = 2,
-            block = 3,
-            unblock = 4,
-           
-            interactOn = 5,
-            interactOff = 6,
-        }
-    }
-    public static class VRCAProperties
-    {
-        public enum Action
-        {
-            Select = 0,
-            Delete = 1,
+            public enum Action { Select = 0, Delete = 1 }
         }
     }
 }
+
 
