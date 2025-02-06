@@ -15,10 +15,31 @@ using static VRCMagik.Wrappers.VRCServer.API_VRC.VRCUser;
 
 namespace VRCMagik.Wrappers;
 internal class VRCServer
-{
+{     
+    
+    public VRCServer(string authCookie) => AuthCookie = authCookie;
+
+    private static VRCServer? _instance; // Private static instance
+    private static readonly object _lock = new object(); // Lock object for thread safet
     static string? AuthCookie;
     static Vertical Client = new Vertical("https://api.vrchat.cloud/api/1/");
-    public VRCServer(string authCookie) => AuthCookie = authCookie;
+
+    public static VRCServer GetInstance()
+    {
+        // Double-check locking for thread safety
+        if (_instance == null)
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new VRCServer(AuthCookie);
+                }
+            }
+        }
+        return _instance;
+    }
+
     public void CreateGroup(string name, string dev)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
@@ -35,17 +56,20 @@ internal class VRCServer
         await Client.Call(Vertical.Requests.DEL, $"groups/{grpId}");
     }
     #region PlayerModeration
-    public async Task AsyncBlockUser(string _usr)
+
+    public async Task AsyncUnmuteUser(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr, type = "block"};
+        ModerationData mdata = new() { moderated = _usr, type = "unmute" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        string data = JsonSerializer.Serialize(JsonDATA);
-        HttpContent content = new StringContent(data,Encoding.UTF8, "application/json");
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
+        string data = JsonSerializer.Serialize(mdata);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.PUT, $"auth/user/unplayermoderate", content);
     }
-    public async Task AsyncUnblockUser(string _usr, string type)
+
+   
+    public async Task AsyncUnblockUser(string _usr)
     {
         ModerationData mdata = new() {moderated = _usr,type = "unblock"};
 
@@ -53,11 +77,23 @@ internal class VRCServer
 
         string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
-        await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
+        await Client.Call(Vertical.Requests.PUT, $"auth/user/unplayermoderate", content);
     }
-    public async Task AsyncMuteUser(string _usr, string type)
+
+    public async Task AsyncInteractionUserOn(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr, type = "mute"};
+        ModerationData mdata = new() {moderated = _usr, type = "interactOn"};
+
+        if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+
+        string data = JsonSerializer.Serialize(mdata);
+        HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        await Client.Call(Vertical.Requests.PUT, $"auth/user/unplayermoderate", content);
+    }
+   
+    public async Task AsyncMuteUser(string _usr)
+    {
+        ModerationData mdata = new() { moderated = _usr, type = "mute" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -65,9 +101,9 @@ internal class VRCServer
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-    public async Task AsyncUnmuteUser(string _usr, string type)
+    public async Task AsyncBlockUser(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr, type = "unmute"};
+        ModerationData mdata = new() { moderated = _usr, type = "block" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -75,25 +111,17 @@ internal class VRCServer
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-    public async Task AsyncInteractionUser(string _usr, bool state)
+    public async Task AsyncInteractionUserOff(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr};
+        ModerationData mdata = new() { moderated = _usr, type = "interactOff" };
 
-        switch (state)
-        {
-            case true:
-                mdata.type = "interactOn";
-                break;
-            case false:
-                mdata.type = "interactOff";
-                break;  
-        }
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
         string data = JsonSerializer.Serialize(mdata);
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
+
     #endregion
     public async Task AsyncSelectAvatar(string avatarId)
     {
@@ -117,24 +145,32 @@ internal class VRCServer
     }
 
 
-    public class Advance
+    public static class Advance
     {
-        public async Task PlayerModeration(string _usr, API_VRC.VRCUser.ModerationTypes types)
+        public static async Task PlayerModeration(string _usr, ModerationTypes types)
         {
             if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
+
             switch (types)
             {       
-                case ModerationTypes.mute:                
-                    break;
                 case ModerationTypes.unmute:
-                    break;
-                case ModerationTypes.block:
+                    await GetInstance().AsyncUnmuteUser(_usr);
                     break;
                 case ModerationTypes.unblock:
+                    await GetInstance().AsyncUnblockUser(_usr);
                     break;
                 case ModerationTypes.interactOn:
+                    await GetInstance().AsyncInteractionUserOn(_usr);
+                    break;
+
+                case ModerationTypes.mute:
+                    await GetInstance().AsyncMuteUser(_usr);
+                    break;
+                case ModerationTypes.block:
+                    await GetInstance().AsyncBlockUser(_usr);
                     break;
                 case ModerationTypes.interactOff:
+                    await GetInstance().AsyncInteractionUserOff(_usr);
                     break;
             }
         }
