@@ -25,7 +25,6 @@ internal class Entry
                     console.Info("avatar ID!");
                     await server.AsyncSelectAvatar(handle);
                 }
-
             }
         }
         if (cmd != null && cmd.StartsWith("del"))
@@ -53,7 +52,12 @@ internal class Entry
                 if (handle.StartsWith(value: "usr_"))
                 {
                     console.Info("USER ID");
-                    await VRCServer.Advance.PlayerModeration(handle,VRCServer.API_VRC.VRCUser.ModerationTypes.interactOn);
+                    switch (handle)
+                    {
+                        default:
+                            break;
+                    }
+                    await VRCServer.Advance.PlayerModeration(handle,VRCServer.API_VRC.VRCUser.ModerationTypes.mute);
                 }
 
             }

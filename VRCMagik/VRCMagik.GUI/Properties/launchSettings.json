@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "VRCMagik.GUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "VRCMagik.GUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

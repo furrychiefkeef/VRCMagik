@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-using VRCMagik.Console.Enviroment.Wrappers;
 using VRCMagik.NET.Wrappers;
 
 using static VRCMagik.Wrappers.VRCServer.API_VRC.VRCUser;
 
 namespace VRCMagik.Wrappers;
 internal class VRCServer
-{     
-    
+{
     public VRCServer(string authCookie) => AuthCookie = authCookie;
 
     private static VRCServer? _instance; // Private static instance
@@ -29,16 +20,25 @@ internal class VRCServer
         // Double-check locking for thread safety
         if (_instance == null)
         {
-            lock (_lock)
-            {
-                if (_instance == null)
-                {
-                    _instance = new VRCServer(AuthCookie);
-                }
-            }
+            lock (_lock) if (_instance == null) _instance = new VRCServer(AuthCookie);
         }
         return _instance;
     }
+    /// <summary>
+    /// Initializes the HTTP client for VRChat API requests.
+    /// </summary
+    public static VRCServer Connect()
+    {
+        Client.Connect();
+        Client.Server.DefaultRequestHeaders
+             .Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0");
+        Client.Server.DefaultRequestHeaders
+            .Add("Accept", "application/json");
+        Client.Server.DefaultRequestHeaders
+            .Add("Cookie", AuthCookie);
+        return default;
+    }
+
     #region Groups
     public void CreateGroup(string name, string dev)
     {
@@ -56,17 +56,18 @@ internal class VRCServer
         await Client.Call(Vertical.Requests.DEL, $"groups/{grpId}");
     }
     #endregion
-
     #region VRCUser
+    #region PlayerModeration
 
-    public async Task AsyncRemoveAllModerations()
+
+    public async Task AsyncClearAllModerations()
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
         await Client.Call(Vertical.Requests.DEL, $"auth/user/playermoderations");
     }
     public async Task AsyncUnmuteUser(string _usr)
     {
-        ModerationData mdata = new() { moderated = _usr, type = "unmute" };
+        ModerationDATA mdata = new() { moderated = _usr, type = "unmute" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -75,10 +76,10 @@ internal class VRCServer
         await Client.Call(Vertical.Requests.PUT, $"auth/user/unplayermoderate", content);
     }
 
-   
+
     public async Task AsyncUnblockUser(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr,type = "unblock"};
+        ModerationDATA mdata = new() { moderated = _usr, type = "unblock" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -89,7 +90,7 @@ internal class VRCServer
 
     public async Task AsyncInteractionUserOn(string _usr)
     {
-        ModerationData mdata = new() {moderated = _usr, type = "interactOff"};
+        ModerationDATA mdata = new() { moderated = _usr, type = "interactOff" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -97,10 +98,10 @@ internal class VRCServer
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.PUT, $"auth/user/unplayermoderate", content);
     }
-   
+
     public async Task AsyncMuteUser(string _usr)
     {
-        ModerationData mdata = new() { moderated = _usr, type = "mute" };
+        ModerationDATA mdata = new() { moderated = _usr, type = "mute" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -110,7 +111,7 @@ internal class VRCServer
     }
     public async Task AsyncBlockUser(string _usr)
     {
-        ModerationData mdata = new() { moderated = _usr, type = "block" };
+        ModerationDATA mdata = new() { moderated = _usr, type = "block" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -120,7 +121,7 @@ internal class VRCServer
     }
     public async Task AsyncInteractionUserOff(string _usr)
     {
-        ModerationData mdata = new() { moderated = _usr, type = "interactOff" };
+        ModerationDATA mdata = new() { moderated = _usr, type = "interactOff" };
 
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
@@ -128,45 +129,28 @@ internal class VRCServer
         HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
         await Client.Call(Vertical.Requests.POST, $"auth/user/playermoderations", content);
     }
-
     #endregion
-
+    #endregion
     #region Avatar
-    public async Task AsyncSelectAvatar(string avatarId)
+    public async Task AsyncSelectAvatar(string avtrId)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.PUT, $"avatars/{avatarId}/select");
+        await Client.Call(Vertical.Requests.PUT, $"avatars/{avtrId}/select");
     }
-    public async Task AsyncDeleteAvatar(string avatarId)
+    public async Task AsyncDeleteAvatar(string avtrId)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.DEL, $"avatars/{avatarId}");
+        await Client.Call(Vertical.Requests.DEL, $"avatars/{avtrId}");
     }
-    public async Task AsyncUpdateAvatar(string avatarId)
+    public async Task AsyncUpdateAvatar(string avtrId)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
-        await Client.Call(Vertical.Requests.PUT, $"avatars/{avatarId}");
+        await Client.Call(Vertical.Requests.PUT, $"avatars/{avtrId}");
     }
     #endregion
-
-    /// <summary>
-    /// Initializes the HTTP client for VRChat API requests.
-    /// </summary>
-    public static VRCServer Connect()
-    {
-        Client.Connect();
-        Client.Server.DefaultRequestHeaders
-             .Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0");
-        Client.Server.DefaultRequestHeaders
-            .Add("Accept", "application/json");
-        Client.Server.DefaultRequestHeaders
-            .Add("Cookie", AuthCookie);
-        return default;
-    }
-
 
     public static class Advance
     {
@@ -175,7 +159,7 @@ internal class VRCServer
             if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
 
             switch (types)
-            {       
+            {
                 case ModerationTypes.unmute:
                     await GetInstance().AsyncUnmuteUser(_usr);
                     break;
@@ -207,18 +191,20 @@ internal class VRCServer
                 case API_VRC.VRCAvatar.Action.Delete:
                     await GetInstance().AsyncDeleteAvatar(avtr);
                     break;
+                case API_VRC.VRCAvatar.Action.Update:
+                    await GetInstance().AsyncUpdateAvatar(avtr);
+                    break;
             }
         }
     }
-  
-   
+
     public static class API_VRC
     {
-        //if you deob it doesn't look like what ur seeing trust.
+       
         public static class VRCUser
         {
             #region Moderation
-            public struct ModerationData
+            public struct ModerationDATA
             {
                 public string? moderated { get; set; }
                 public string? type { get; set; }
@@ -226,9 +212,25 @@ internal class VRCServer
             public enum ModerationTypes { unmute = 0, unblock = 1, interactOn = 2, mute = 3, block = 4, interactOff = 5 }
             #endregion
         }
-        public static class VRCAvatar
+        public class VRCAvatar
         {
-            public enum Action { Select = 0, Delete = 1 }
+            public struct AvatarDATA
+            {
+                public string? assetUrl;        
+                public string? id;              
+                public string? name;     
+                public string? description;    
+                public List<string>? tags;  
+                public string? imageUrl;    
+                public ReleaseStatus releaseStatus; 
+                public int version;             
+                public string? unityPackageUrl;  
+                public string? unityVersion;
+            }
+          
+
+            public enum Action { Select = 0, Delete = 1, Update = 3 }
+            public enum ReleaseStatus { PUBLIC, PRIVATE, HIDDEN ,ALL }
         }
     }
 }
