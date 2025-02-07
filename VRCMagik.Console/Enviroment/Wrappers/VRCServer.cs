@@ -10,8 +10,8 @@ internal class VRCServer
 {
     public VRCServer(string authCookie) => AuthCookie = authCookie;
 
-    private static VRCServer? _instance; // Private static instance
-    private static readonly object _lock = new object(); // Lock object for thread safet
+    private static VRCServer? _instance; 
+    private static readonly object _lock = new object();
     static string? AuthCookie;
     static Vertical Client = new Vertical("https://api.vrchat.cloud/api/1/");
 

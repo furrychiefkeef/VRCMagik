@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "PD4alm1e+xc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\arfvi\\OneDrive\\Documents\\Repository\\VS\\VRCMagik\\VRCMagik.Console\\VRCMagik.Console.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\arfvi\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\9.0.0\\microsoft.dotnet.ilcompiler.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\microsoft.net.illink.tasks\\9.0.0\\microsoft.net.illink.tasks.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\pastel\\6.0.1\\pastel.6.0.1.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\9.0.0\\runtime.win-x64.microsoft.dotnet.ilcompiler.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\9.0.0\\microsoft.netcore.app.runtime.win-x64.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\9.0.0\\microsoft.windowsdesktop.app.runtime.win-x64.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\9.0.0\\microsoft.aspnetcore.app.runtime.win-x64.9.0.0.nupkg.sha512",
+    "C:\\Users\\arfvi\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\9.0.0\\runtime.win-x64.microsoft.dotnet.ilcompiler.9.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

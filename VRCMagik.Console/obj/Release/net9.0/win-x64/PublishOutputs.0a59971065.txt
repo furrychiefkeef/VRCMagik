@@ -1,0 +1,1 @@
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\bin\Release\net9.0\publish\win-x64\VRCMagik.Console.exe

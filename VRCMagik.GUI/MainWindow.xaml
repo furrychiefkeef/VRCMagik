@@ -1,15 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Window
-    x:Class="VRCMagik.GUI.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:VRCMagik.GUI"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="VRCMagik.GUI">
+﻿<Window x:Class="VRCMagik.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VRCMagik.GUI"
+        mc:Ignorable="d"
+        Title="VRCMagik" Height="476" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Background>
+        <SolidColorBrush Color="#FF040404"/>
+    </Window.Background>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid UseLayoutRounding="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="393*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="8,357,0,4" HorizontalAlignment="Left" Width="790" Grid.ColumnSpan="2">
+            <Button Click="Button_Click" Content="console" Height="53" Width="102" Background="#FF130009" BorderBrush="#FFFF0075" Foreground="#FFFF0075" Margin="10" FontFamily="MesloLGS Nerd Font"/>
+            <Button Content="select" Height="53" Width="102" Background="#FF130009" BorderBrush="#FFFF0075" Foreground="#FFFF0075" BorderThickness="1,1,1,1" FontFamily="MesloLGM Nerd Font" Click="Button_Click_1"/>
+        </StackPanel>
+        <Canvas Margin="10,10,10,82" Grid.ColumnSpan="2">
+            <TextBlock x:Name="Seal" Canvas.Left="10" TextWrapping="Wrap" Text="" Canvas.Top="10" Background="#FF130009" Foreground="White" Height="348" Width="341" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+        </Canvas>
+
+    </Grid>
 </Window>
