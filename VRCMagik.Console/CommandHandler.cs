@@ -19,9 +19,9 @@ internal  static class CommandHandler
             return null;
         }
 
-        foreach (var item in commands)
+        foreach (KeyValuePair<string, string> item in commands)
         {
-            if (target.StartsWith(item.Key))
+            if (target.StartsWith($"{item.Key}_{item.Value}"))
             {
                 string[] cmdParts = target.Split(' ');
                 handle = cmdParts[1];

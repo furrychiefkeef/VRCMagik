@@ -132,6 +132,12 @@ internal class VRCServer
     #endregion
     #endregion
     #region Avatar
+    /// <summary>
+    ///   Select Avatar: Ex ~  avtr_0000000000-00000000000-00000000000
+    /// </summary>
+    /// <param name="avtrId">Put the avtr_id</param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task AsyncSelectAvatar(string avtrId)
     {
         if (Client is null) throw new InvalidOperationException("HttpClient is not initialized. Call Connect() first.");
