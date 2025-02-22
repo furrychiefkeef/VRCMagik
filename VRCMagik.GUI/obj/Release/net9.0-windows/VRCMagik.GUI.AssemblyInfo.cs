@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VRCMagik.GUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24c55baa261aff1e3469223c92f6519ec5d4f29a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6165cea14ad122a8ae6f4a6bc13e6fe7f4dd0fcb")]
 [assembly: System.Reflection.AssemblyProductAttribute("VRCMagik.GUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VRCMagik.GUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SplashScreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="bg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="SplashScreen.png" />
   </ItemGroup>
 
 </Project>

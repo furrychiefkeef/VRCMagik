@@ -17,3 +17,4 @@ C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\obj\Re
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\obj\Release\net9.0\VRCMagik.Console.pdb
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\obj\Release\net9.0\VRCMagik.Console.genruntimeconfig.cache
 C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\obj\Release\net9.0\ref\VRCMagik.Console.dll
+C:\Users\arfvi\OneDrive\Documents\Repository\VS\VRCMagik\VRCMagik.Console\bin\Release\net9.0\System.Text.Json.dll

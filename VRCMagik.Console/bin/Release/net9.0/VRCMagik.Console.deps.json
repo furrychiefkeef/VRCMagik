@@ -11,7 +11,8 @@
           "Microsoft.DotNet.ILCompiler": "9.0.0",
           "Microsoft.NET.ILLink.Tasks": "9.0.0",
           "Newtonsoft.Json": "13.0.3",
-          "Pastel": "6.0.1"
+          "Pastel": "6.0.1",
+          "System.Text.Json": "9.0.1"
         },
         "runtime": {
           "VRCMagik.Console.dll": {}
@@ -32,6 +33,14 @@
           "lib/net9.0/Pastel.dll": {
             "assemblyVersion": "6.0.1.0",
             "fileVersion": "6.0.1.0"
+          }
+        }
+      },
+      "System.Text.Json/9.0.1": {
+        "runtime": {
+          "lib/net9.0/System.Text.Json.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.124.61010"
           }
         }
       }
@@ -70,6 +79,13 @@
       "sha512": "sha512-7naIbEgNzZnorWWIfI0rsC4GUtw/Yjqt+Kd28e8xpzfsaismJ02WF4vG/USDbmJQkBMWPsNPM+KUxNlUiGad+w==",
       "path": "pastel/6.0.1",
       "hashPath": "pastel.6.0.1.nupkg.sha512"
+    },
+    "System.Text.Json/9.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eqWHDZqYPv1PvuvoIIx5pF74plL3iEOZOl/0kQP+Y0TEbtgNnM2W6k8h8EPYs+LTJZsXuWa92n5W5sHTWvE3VA==",
+      "path": "system.text.json/9.0.1",
+      "hashPath": "system.text.json.9.0.1.nupkg.sha512"
     }
   }
 }

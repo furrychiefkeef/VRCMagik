@@ -21,6 +21,12 @@ internal class Entry
         {
             await server.AsyncSelectAvatar(x);
             return;
+        }); 
+        CommandHandler.commands.Add("sel", "block_usr");
+        await cmd.command(async x =>
+        {
+            await server.AsyncBlockUser(x);
+            return;
         });
     }
 }
